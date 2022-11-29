@@ -130,3 +130,4 @@ Route::group(['middleware' => ['auth']], function(){
 
 //Rutas de pdf
 Route::get('pdfresidente', 'PDFControllerResidente@pdf');
+Route::get('pdfvisitantes', 'PDFControllerVisitante@pdf');

@@ -41,22 +41,9 @@
 	<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 	<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 	<script src="../assets/js/config.js"></script>
-	{{-- agenda --}}
-	<!--begin::Global Stylesheets Bundle(used by all pages)-->
-	<script src="{{ asset('js/app.js') }}" defer></script>
-	<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-	{{-- <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" /> --}}
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.css">
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/locales-all.js"></script>
-
-	<script type="text/javascript">
-		var baseURL = {!! json_encode(url('/')) !!}
-	</script>
-	<!--end::Global Stylesheets Bundle-->
-
-	{{-- datatable --}}
-	<link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css"/>
+	
+	@yield('content-css')
+	
 </head>
 
 <body>
@@ -369,16 +356,7 @@
 	<!-- Place this tag in your head or just before your close body tag. -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 
-	{{-- agenda --}}
-	<!--begin::Global Javascript Bundle(used by all pages)-->
-	<script src="assets/plugins/global/plugins.bundle.js"></script>
-	<script src="assets/js/scripts.bundle.js"></script>
-	<!--end::Global Javascript Bundle-->
-	<!--begin::Page Custom Javascript(used by this page)-->
-	<script src="assets/js/custom/widgets.js"></script>
-	<script src="assets/js/custom/modals/create-app.js"></script>
-	<script src="assets/js/custom/modals/upgrade-plan.js"></script>
-	<script src="{{ asset('js/agenda.js') }}" defer></script>
+	
 
 	@yield('content-js')
 

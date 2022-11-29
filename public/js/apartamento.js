@@ -93,7 +93,7 @@ $(document).on('click','.open_modal',function(){
             $('#numeroAptoNew').val(parseInt(data[0]['numeroApto']));
             $('#numeroTorreNew').val(data[0]['numeroTorre']);
             $('#estadoNew').val(data[0]['estado']);
-            $('#proAptoNew').val(data[0]['propietarioApartamento']);
+            $('#proAptoNew').val(data[0]['idUsuario']);
             $('#editModal').modal('show');
         },
         error: function (data) {
@@ -137,7 +137,7 @@ $('#update-apto-form').on('submit', function(e){
             console.log(data)
             if(data.error){
                 $.confirm({
-                    title: 'Usuario no actualizado',
+                    title: 'Apartamento no actualizado',
                     content: 'Se ha encontrado un error de tipo: ' + data.error + '<br><br> <b>Intente actualizar la visita nuevamente. Si el problema persiste por favor comunicarse con el área de soporte.</b>',
                     type: 'red',
                     typeAnimated: true,
@@ -151,8 +151,8 @@ $('#update-apto-form').on('submit', function(e){
                return;
             }else if(data.success){
                 $.confirm({
-                    title: 'Usuario actualizada',
-                    content: 'El usuario se ha actulizado con éxito.',
+                    title: 'Apartamento actualizada',
+                    content: 'El Apartamento se ha actulizado con éxito.',
                     type: 'green',
                     typeAnimated: true,
                     buttons: {
@@ -180,36 +180,4 @@ $('#update-apto-form').on('submit', function(e){
             $('#ul-errors-update').append(valor);
            }
     });
-});
-
-$(document).ready(function(){
-
-    $('#AptoTable').on('click','.viewdetails',function(){
-        var empid = $(this).attr('data-id');
-
-        if(empid > 0){
-
-           // AJAX request
-        //    var url = "{{ route('getEmployeeDetails',[':empid']) }}";
-           var url = ruta2;
-           url = url.replace(':aptoid',empid);
-
-           // Empty modal data
-           $('#tblempinfo tbody').empty();
-
-           $.ajax({
-               url: url,
-               dataType: 'json',
-               success: function(response){
-
-                   // Add employee details
-                   $('#tblempinfo tbody').html(response.html);
-
-                   // Display Modal
-                   $('#viewModal').modal('show'); 
-               }
-           });
-        }
-    });
-
 });

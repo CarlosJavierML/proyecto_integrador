@@ -1,5 +1,23 @@
 @extends('layouts.layouts')
 
+@section('content-css')
+{{-- agenda --}}
+<!--begin::Global Stylesheets Bundle(used by all pages)-->
+<script src="{{ asset('js/app.js') }}" defer></script>
+<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+{{-- <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" /> --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/locales-all.js"></script>
+
+<script type="text/javascript">
+    var baseURL = {!! json_encode(url('/')) !!}
+</script> 
+<!--end::Global Stylesheets Bundle-->
+
+{{-- datatable --}}
+	<link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css"/> 
+
 @section('content')
 
 <div class="container col-md-12">
@@ -59,14 +77,43 @@
                                 <small id="helpId" class="form-text text-muted">Hora Fin</small>
                             </div>
                        </div>
-                      
+                       @if(Session::get('roleuser') == 1)
+                            <div class="row">
+                                    <div class="col mb-0">
+                                        <input type="text" class="form-control" id="solicitante" aria-describedby="solicitante" placeholder="" readonly>
+                                        <small id="solicitante" class="form-text text-muted">Solicitante</small>
+                                    </div>
+                            </div>
+                        @endif
+                       <div class="row">
+                            <div class="col mb-0">
+                                <select class="form-control" id="estado" name="estado">
+                                        @if(Session::get('roleuser') == 4){
+                                            <option value="1">Solicitar</option>
+                                        }
+                                        @elseif (Session::get('roleuser') == 1 || Session::get('roleuser') ==  2 || Session::get('roleuser') == 3)
+                                        <option value="">seleccione</option>
+                                        <option value="1">Solicitar</option>
+                                        <option value="2">Aceptar</option>
+                                        <option value="3">Rechazar</option>
+                                        @endif
+                                </select>
+                                <small for="estado" class="form-text text-muted">Estado</small>
+                            </div>
+                       </div>
                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
-                    <button type="button" class="btn btn-primary" id="btnModificar">Modificar</button>
-                    <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
-                    <button type="button" class="btn btn-secondary" id="btnCerrar">Cerrar</button>
+                    <input type="hidden" name="" id="rol" value="{{Session::get('roleuser')}}">
+                    @if(Session::get('roleuser') != 4)
+                        <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+                        <button type="button" class="btn btn-primary" id="btnModificar">Modificar</button>
+                        <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
+                        <button type="button" class="btn btn-secondary" id="btnCerrar">Cerrar</button>
+                    @else
+                        <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+                        <button type="button" class="btn btn-secondary" id="btnCerrar">Cerrar</button>
+                    @endif
                 </div>
             </div>
         </div>
@@ -78,4 +125,16 @@
 </div>
 </div>
 
+@endsection
+
+@section('content-js')
+{{-- agenda --}}
+
+{{-- <script src="assets/plugins/global/plugins.bundle.js"></script> --}}
+<script src="assets/js/scripts.bundle.js"></script>
+
+<script src="assets/js/custom/widgets.js"></script>
+<script src="assets/js/custom/modals/create-app.js"></script>
+<script src="assets/js/custom/modals/upgrade-plan.js"></script>
+<script src="{{ asset('js/agenda.js') }}" defer></script>
 @endsection

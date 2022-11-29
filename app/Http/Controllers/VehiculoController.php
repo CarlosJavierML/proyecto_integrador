@@ -141,7 +141,7 @@ class VehiculoController extends Controller
     {
         //$usuarios = Usuario::all();
         $vehiculo = DB::table('vehiculo as v')
-            ->leftJoin('usuario as u', 'v.idUsuario', '=', 'u.id_usu')
+            ->leftJoin('users as u', 'v.idUsuario', '=', 'u.id')
             ->where('v.id_placa', '=', $vehiculo->id_placa)
             ->select('*')->get();
             return response()->json($vehiculo);

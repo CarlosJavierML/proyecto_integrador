@@ -46,7 +46,7 @@
                     <td> {{$vehiculo->numParqueadero }} </td>
                     <td> 
                         @foreach ($usuarios as $usuario)
-                            @if($usuario->id_usu == $vehiculo->idUsuario)
+                            @if($usuario->id == $vehiculo->idUsuario)
                                 {{$usuario['primerNombre']}} {{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}
                             @endif
                         @endforeach 
@@ -140,7 +140,7 @@
                                 <select name="idUsuario" id="idUsuario" class="form-control">
                                     <option>Seleccione</option>
                                     @foreach ($usuarios as $usuario)
-                                    <option value="{{$usuario['id_usu']}}">{{$usuario['tipoDoc']}}{{$usuario['numeroDoc']}} --- {{$usuario['primerNombre']}} {{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}</option>
+                                    <option value="{{$usuario['id']}}">{{$usuario['tipoDoc']}}{{$usuario['numeroDoc']}} --- {{$usuario['primerNombre']}} {{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -222,10 +222,10 @@
                         <div class="row g-2" >
                             <div class="col mb-0">
                                 <label for="idUsuarioNew" class="form-label">Propietario Vehiculo</label>
-                                <select name="idUsuarioNew" id="idUsuarioNew" class="form-select" value="{{$usuario['id_usu']}}">
+                                <select name="idUsuarioNew" id="idUsuarioNew" class="form-select" value="{{$usuario['id']}}">
                                     <option>Seleccione</option>
                                     @foreach ($usuarios as $usuario)
-                                    <option value="{{$usuario['id_usu']}}">{{$usuario['primerNombre']}}{{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}</option>
+                                    <option value="{{$usuario['id']}}">{{$usuario['primerNombre']}}{{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}</option>
                                     @endforeach
                                 </select>
                             </div>

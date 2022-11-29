@@ -24,7 +24,6 @@
                     <th>Estado</th>
                     <th>Residente</th>
                     <th>Actions</th>
-                    
                     </tr>
                 </thead>
                 @php
@@ -39,7 +38,7 @@
                     <td> {{$apartamento->estado }} </td>
                     <td> 
                         @foreach ($usuarios as $usuario)
-                            @if($usuario->id_usu == $apartamento->idUsuario)
+                            @if($usuario->id == $apartamento->idUsuario)
                                 {{$usuario['primerNombre']}} {{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}
                             @endif
                         @endforeach 
@@ -112,7 +111,7 @@
                                 <select class="form-control" id="propietarioApartamento" name="propietarioApartamento" aria-label="Propietario Apartamento">
                                 <option value="">Seleccione</option>
                                 @foreach ($usuarios as $usuario)
-                                    <option value="{{$usuario['id_usu']}}">{{$usuario['tipoDoc']}}{{$usuario['numeroDoc']}} --- {{$usuario['primerNombre']}} {{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}</option>
+                                    <option value="{{$usuario['id']}}">{{$usuario['tipoDoc']}}{{$usuario['numeroDoc']}} --- {{$usuario['primerNombre']}} {{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}</option>
                                 @endforeach
                                 </select>
                             </div>
@@ -146,7 +145,7 @@
                     </ul>
                 </div>
                 <form method="post" action="{{ route('apartamento.update') }}" id="update-apto-form">
-                    @method('PUT')
+                    @method('POST')
                     @csrf
                     <input type="hidden" name="cid" id="id_editar">
                     <div class="modal-body">
@@ -173,11 +172,11 @@
                         <div class="row g-2">
                             <div class="col mb-0">
                                 <label for="proAptoNew" class="form-label">Propietario Apartamento</label>
-                                <select class="form-select" id="proAptoNew" name="proAptoNew" value="{{$usuario['id_usu']}}">
+                                <select class="form-select" id="proAptoNew" name="proAptoNew" value="{{$usuario['id']}}">
                                 <option>Seleccione</option>
                                 @foreach ($usuarios as $usuario)
                                     
-                                    <option value="{{$usuario['id_usu']}}">{{$usuario['primerNombre']}} {{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}</option>
+                                    <option value="{{$usuario['id']}}">{{$usuario['tipoDoc']}}{{$usuario['numeroDoc']}} --- {{$usuario['primerNombre']}} {{$usuario['segundoNombre']}} {{$usuario['primerApellido']}} {{$usuario['segundoApellido']}}</option>
                                     
                                 @endforeach 
                                     
@@ -195,43 +194,11 @@
         </div>
     </div>
     <!-- fin editar modal -->
-
-    <!-- show modal -->
-<div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Visualizar Residente {{ $apartamento->numeroApto }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-            <div class="modal-body">
-                <table class="table table-bordered table table-striped table table-hover" id="tblempinfo">
-                    <tbody></tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- fin show modal -->
 @endsection
 
 @section('content-js')
 <script>
     let ruta = "{{ route('apartamento.store') }}";
-    let ruta2 = "{{ route('apartamento.show',[':aptoid']) }}";
 </script>
 <script src="{{ asset('js/apartamento.js') }}"></script>
 @endsection

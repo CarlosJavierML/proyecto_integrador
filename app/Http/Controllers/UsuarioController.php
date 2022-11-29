@@ -8,6 +8,7 @@ use App\Models\Estado;
 use App\Models\Rol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Password;
 
 class UsuarioController extends Controller
 {
@@ -64,8 +65,22 @@ class UsuarioController extends Controller
             'celular' => 'required',
             'correo' => 'required',
             'estado' => 'required',
-            'rol' => 'required'
+            'rol' => 'required',
+
+            'password' => [
+                'required',
+                'max:50',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
+            "password_confirmation" => "required|min:8|max:50|same:password",
         ]);
+
+        
 
         if (isset($request->validate) && $request->validate->fails()) {
             return json_encode($validacion);
@@ -76,18 +91,22 @@ class UsuarioController extends Controller
             $usuario = new Usuario([
                 'primerNombre' => $request->get('primerNombre'),
                 'primerApellido' => $request->get('primerApellido'),
+                'name' => $request->get('primerNombre').' '.$request->get('primerApellido'),
                 'tipoDoc' => $request->get('tipoDoc'),
                 'numeroDoc' => $request->get('numeroIdentidad'),
                 'fechaNacimiento' => $request->get('fechaNacimiento'),
                 'sexo' => $request->get('sexo'),
                 'telefono' => $request->get('celular'),
+                'correo' => $request->get('correo'),
                 'email' => $request->get('correo'),
                 'idEstado' => $request->get('estado'),
                 'idRol' => $request->get('rol'),
+                'rol' => $request->get('rol'),
+                'password' => bcrypt($request->get('password'))
             ]);
 
             $usuario->save();
-            $idusu = $usuario->id_usu;
+            $idusu = $usuario->id;
             DB::commit();
             if ($idusu != NULL) {
                 return json_encode(['success' => '1']);
@@ -109,7 +128,7 @@ class UsuarioController extends Controller
     {
         // die(var_dump($usuario->id_usu));
         // $users = Usuario::find($usuario->id_usu)->first();
-        $users = Usuario::where('id_usu',$usuario->id_usu)->get();
+        $users = Usuario::where('id',$usuario->id)->get();
 
         // die($users);
         $html = "";
@@ -173,10 +192,10 @@ class UsuarioController extends Controller
     public function edit(Usuario $usuario)
     {
         //$usuario = Usuario::findOrFail($id_usu);
-        $usuario = DB::table('usuario as u')
+        $usuario = DB::table('users as u')
             ->leftJoin('rol as r', 'u.idRol', '=', 'r.id_rol')
             ->leftJoin('estado as e', 'u.idEstado', '=', 'e.id_est')
-            ->where('u.id_usu', '=', $usuario->id_usu)
+            ->where('u.id', '=', $usuario->id)
             ->select('*')->get();
 
             //dd($usuario);
@@ -241,15 +260,15 @@ class UsuarioController extends Controller
      * @param  int $id_usu
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id_usu)
+    public function destroy($id)
     {
-        Usuario::destroy($id_usu);
+        Usuario::destroy($id);
         return redirect('/usuarios')->with('destroy', 'Datos eliminados');
         //echo $id_usu;
     }
 
-    public function habilitar($id_usu){
-        $usuario = Usuario::find($id_usu);
+    public function habilitar($id){
+        $usuario = Usuario::find($id);
         switch($usuario->idEstado){
             case null:
                 $usuario->idEstado=1;

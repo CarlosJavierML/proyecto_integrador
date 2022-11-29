@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Usuario extends Model
 {
    //Vvincular modelo a tabla atributo
-   protected $table = "usuario";
+   protected $table = "users";
    //establecer la PK para la entidad (por defecto: id)
-   protected $primaryKey = "id_usu";
+   protected $primaryKey = "id";
    //omitir campos de auditoria
    public $timestamps = false;
 
    use HasFactory;
    protected $fillable = [
-      'primerNombre', 'segundoNombre' ,  'primerApellido' ,'segundoApellido', 'tipoDoc', 'numeroDoc','fechaNacimiento', 'sexo', 'telefono', 'email', 'idEstado', 'idRol'
+      'primerNombre', 'segundoNombre' ,  'primerApellido' ,'segundoApellido', 'tipoDoc', 'numeroDoc','fechaNacimiento', 'sexo', 'telefono', 'correo', 'idEstado', 'idRol', 'rol', 'email', 'password', 'name'
    ];
 
    public function Estado()

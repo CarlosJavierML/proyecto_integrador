@@ -43,7 +43,7 @@
             <tbody class="table-border-bottom-0">
                 @foreach ($usuarios as $usuario)
                 <tr>
-                    <td> {{$usuario->id_usu}} </td>
+                    <td> {{$usuario->id}} </td>
                     <td> {{$usuario->primerNombre}} </td>
                     <td> {{$usuario->primerApellido}} </td>
                     <td> {{$usuario->tipoDoc }} </td>
@@ -55,35 +55,35 @@
                     </td>-->
                     <td>
 
-                        <form action="{{ route('usuario.destroy', $usuario->id_usu) }}" method="POST">
-                            <button type="button" class='btn btn-info viewdetails' data-id='{{$usuario->id_usu }}'>Show</button>
-                            <button type="button" class="btn btn-warning btn-detail open_modal" value="{{$usuario->id_usu}}">Edit</button>
+                        <form action="{{ route('usuario.destroy', $usuario->id) }}" method="POST">
+                            <button type="button" class='btn btn-info viewdetails' data-id='{{$usuario->id }}'>Show</button>
+                            <button type="button" class="btn btn-warning btn-detail open_modal" value="{{$usuario->id}}">Edit</button>
                             @csrf @method('DELETE')
                             <!-- <button type="submit" class="btn btn-danger">Eliminar</button>-->
                         
                         </form>
                     </td>
                     <td>
-                                            @switch($usuario->idEstado)
-                                            @case(null)
-                                            <a class="btn btn-secondary" href="{{ url('usuarios/'. $usuario->id_usu . "/habilitar") }}">
-                                                Asignar estado
-                                            </a>
-                                            @break
-                                            @case(1)
-                                            <strong class="text-success">Residente hablilitado</strong>
-                                            <a class="btn btn-secondary" href="{{ url('usuarios/'. $usuario->id_usu . "/habilitar") }}">
-                                                Deshabilitar
-                                            </a>
-                                            @break
-                                            @case(2)
-                                            <strong class="text-danger">Residente deshabilitado</strong>
-                                            <a class="btn btn-secondary" href="{{ url('usuarios/'. $usuario->id_usu . "/habilitar") }}">
-                                                Habilitar
-                                            </a>
-                                            @break
-                                        @endswitch
-                                        </td>
+                        @switch($usuario->idEstado)
+                            @case(null)
+                            <a class="btn btn-secondary" href="{{ url('usuarios/'. $usuario->id . "/habilitar") }}">
+                                Asignar estado
+                            </a>
+                            @break
+                            @case(1)
+                            <strong class="text-success">Residente hablilitado</strong>
+                            <a class="btn btn-secondary" href="{{ url('usuarios/'. $usuario->id . "/habilitar") }}">
+                                Deshabilitar
+                            </a>
+                            @break
+                            @case(2)
+                            <strong class="text-danger">Residente deshabilitado</strong>
+                            <a class="btn btn-secondary" href="{{ url('usuarios/'. $usuario->id . "/habilitar") }}">
+                                Habilitar
+                            </a>
+                            @break
+                        @endswitch
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -186,6 +186,16 @@
                                 <option value="{{$rol['id_rol']}}">{{ $rol->tipo }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="password" class="form-label">Contraseña: </label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="" />
+                        </div>
+                        <div class="col mb-0">
+                            <label for="password_confirmation" class="form-label">Comfirmar Contraseña: </label>
+                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="" />
                         </div>
                     </div>
                 </div>

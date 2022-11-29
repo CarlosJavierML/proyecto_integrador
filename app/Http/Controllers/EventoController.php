@@ -46,7 +46,8 @@ class EventoController extends Controller
             'title' => request()->input('title'),
             'descripcion' => request()->input('descripcion'),
             'start' => request()->input('start').' '.request()->input('startH'),
-            'end' => request()->input('end').' '.request()->input('endH')
+            'end' => request()->input('end').' '.request()->input('endH'),
+            'estado' => request()->input('estado'),
         ]);
     }
 
@@ -58,9 +59,50 @@ class EventoController extends Controller
      */
     public function show(Evento $evento)
     {
-        //$evento = Evento::all();
-        $evento = DB::table('eventos')->where('id_user','=', Auth::user()->id)->get();
-        return response()->json($evento);
+        if (Auth::user()->rol == 4) {
+            $evento = DB::table('eventos')->where('id_user','=', Auth::user()->id)->get();
+            
+        } else {
+            $evento = Evento::all();
+            
+        }
+        
+        foreach($evento as $event){
+            $color = NULL;
+
+            if ($event->estado == '1' ) {
+                $color = '';
+            } elseif ($event->estado == '2') {
+                $color = '#378006';
+            } elseif ($event->estado == '3') {
+                $color = '#cf2118';
+            }
+
+            if (Auth::user()->rol == 4) {
+                $solicitante = NULL;
+                
+            } else {
+                $solicitante = $event->solicitante;
+            }
+
+            $eventos[] = [
+                'id' => $event->id,
+                'title' => $event->title,
+                'descripcion' => $event->descripcion,
+                'start' => $event->start,
+                'end' => $event->end,
+                'created_at' => $event->created_at,
+                'updated_at' => $event->updated_at,
+                'id_user' => $event->id_user,
+                'estado' => $event->estado,
+                'color' => $color,
+                'solicitante' =>  $solicitante
+                // 'solicitante' => $event->solicitante
+            ];
+            
+        }
+
+        return response()->json($eventos);
     }
 
     /**
@@ -71,13 +113,22 @@ class EventoController extends Controller
      */
     public function edit($id)
     {
-        $evento = Evento::find($id);
-        $evento->startF=Carbon::createFromFormat('Y-m-d H:i:s', $evento->start)->format('Y-m-d');
-        $evento->endF=Carbon::createFromFormat('Y-m-d H:i:s', $evento->end)->format('Y-m-d');
+        // $evento = Evento::find($id);
+        $evento =  DB::table('eventos as ev')
+                        ->leftJoin('users as u', 'ev.id_user', '=', 'u.id')
+                        ->select('ev.title', 'ev.descripcion', 'ev.id', 'ev.start', 'ev.end', 'ev.id_user', 'ev.estado', 'u.primerNombre', 'u.primerApellido', DB::raw('CONCAT(primerNombre, " ", primerApellido) as solicitante'))
+                        ->where('ev.id', '=', $id)
+                        ->get();
+
+        // die($evento);
+        $evento[0]->startF=Carbon::createFromFormat('Y-m-d H:i:s', $evento[0]->start)->format('Y-m-d');
+        // die($evento[0]->startF);
+        $evento[0]->endF=Carbon::createFromFormat('Y-m-d H:i:s', $evento[0]->end)->format('Y-m-d');
         
-        $evento->startH=Carbon::createFromFormat('Y-m-d H:i:s', $evento->start)->format('H:i:s');
-        $evento->endH=Carbon::createFromFormat('Y-m-d H:i:s', $evento->end)->format('H:i:s');
-        return response()->json($evento);
+        $evento[0]->startH=Carbon::createFromFormat('Y-m-d H:i:s', $evento[0]->start)->format('H:i:s');
+        $evento[0]->endH=Carbon::createFromFormat('Y-m-d H:i:s', $evento[0]->end)->format('H:i:s');
+
+        return response()->json($evento[0]);
         //return $evento;
     }
 
@@ -95,11 +146,13 @@ class EventoController extends Controller
         DB::table('eventos')
             ->where('id', request()->id)
             ->update([
-            'id_user' => Auth::user()->id,
+            // 'id_user' => Auth::user()->id,
             'title' => request()->input('title'),
             'descripcion' => request()->input('descripcion'),
             'start' => request()->input('start').' '.request()->input('startH'),
-            'end' => request()->input('end').' '.request()->input('endH')
+            'end' => request()->input('end').' '.request()->input('endH'),
+            'estado' => request()->input('estado'),
+            
         ]);
 
         return response()->json($evento);

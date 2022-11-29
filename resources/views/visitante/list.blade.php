@@ -11,6 +11,7 @@
             </div>
             <div class="col-6 col-md-4">
                 <a class="btn btn-success" href="{{ route('visitante.create') }}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">Add</a>
+                {{-- <a href="{{url ('pdfvisitantes')}}" class="btn btn-info">Generar Reporte</a> --}}
             </div>
         </div>
     </div>
@@ -308,8 +309,6 @@
 </div>
 <!-- fin show modal -->
 
-
-
 @endsection
 
 @section('content-js')
@@ -318,11 +317,4 @@
     let ruta2 = "{{ route('visitante.show',[':visitanteid']) }}";
 </script>
 <script src="{{ asset('js/visitantes.js') }}"></script>
-
-{{-- vendors --}}
-<script src="{{ asset('plugins/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
-
-{{-- page scripts --}}
-<script src="{{ asset('js/pages/crud/datatables/basic/basic.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
 @endsection
