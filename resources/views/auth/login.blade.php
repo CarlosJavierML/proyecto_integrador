@@ -148,12 +148,12 @@
 					@endif
 				</p>
 
-              <p class="text-center">
+              {{-- <p class="text-center">
                 <span>Nuevo en la plataforma?</span>
                 <a href="/register">
                   <span>Crea una cuenta</span>
                 </a>
-              </p>
+              </p> --}}
             </div>
           </div>
           <!-- /Register -->
