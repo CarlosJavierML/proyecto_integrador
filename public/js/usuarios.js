@@ -23,8 +23,8 @@ $('#btnAdd').click(function () {
             //console.log(data)
             if(data.error){
                 $.confirm({
-                    title: 'Visita no guardada',
-                    content: 'Se ha encontrado un error de tipo: ' + data.error + '<br><br> <b>Intente guardar la visita nuevamente. Si el problema persiste por favor comunicarse con el área de soporte.</b>',
+                    title: 'Residente no guardada',
+                    content: 'Se ha encontrado un error de tipo: ' + data.error + '<br><br> <b>Intente guardar la Residente nuevamente. Si el problema persiste por favor comunicarse con el área de soporte.</b>',
                     type: 'red',
                     typeAnimated: true,
                     buttons: {
@@ -37,8 +37,8 @@ $('#btnAdd').click(function () {
                return;
             }else if(data.success){
                 $.confirm({
-                    title: 'Visita guardada',
-                    content: 'La visita se ha guardado con éxito.',
+                    title: 'Residente guardada',
+                    content: 'La Residente se ha guardado con éxito.',
                     type: 'green',
                     typeAnimated: true,
                     buttons: {
@@ -175,7 +175,7 @@ $('#update-usuario-form').on('submit', function(e){
             if(data.error){
                 $.confirm({
                     title: 'Usuario no actualizado',
-                    content: 'Se ha encontrado un error de tipo: ' + data.error + '<br><br> <b>Intente actualizar la visita nuevamente. Si el problema persiste por favor comunicarse con el área de soporte.</b>',
+                    content: 'Se ha encontrado un error de tipo: ' + data.error + '<br><br> <b>Intente actualizar la Residente nuevamente. Si el problema persiste por favor comunicarse con el área de soporte.</b>',
                     type: 'red',
                     typeAnimated: true,
                     buttons: {
