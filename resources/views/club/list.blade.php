@@ -48,14 +48,14 @@
                          <small id="helpId" class="form-text text-muted">&nbsp;</small>
                        </div>
                        <div class="form-group">
-                         <label for="title">Título</label>
+                         {{-- <label for="title">Título</label> --}}
                          <input type="text" class="form-control" name="title" id="title" aria-describedby="helpId" placeholder="" required="required">
-                         <small id="helpId" class="form-text text-muted">&nbsp;</small>
+                         <small id="helpId" class="form-text text-muted">Título</small>
                        </div>
                        <div class="form-group">
-                         <label for="descripcion">Descripción</label>
+                         {{-- <label for="descripcion">Descripción</label> --}}
                          <textarea class="form-control" name="descripcion" id="descripcion" rows="3"></textarea>
-                         <small id="helpId" class="form-text text-muted">&nbsp;</small>
+                         <small id="helpId" class="form-text text-muted">Descripción</small>
                        </div>
                        <div class="row">
                             <div class="form-group col-md-6">
