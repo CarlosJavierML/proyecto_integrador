@@ -57,7 +57,7 @@
 
                         <form action="{{ route('usuario.destroy', $usuario->id) }}" method="POST">
                             <button type="button" class='btn btn-info viewdetails' data-id='{{$usuario->id }}'>Show</button>
-                            <button type="button" class="btn btn-warning btn-detail open_modal" value="{{$usuario->id}}">Edit</button>
+                            {{--<button type="button" class="btn btn-warning btn-detail open_modal" value="{{$usuario->id}}">Edit</button>--}}
                             @csrf @method('DELETE')
                             <!-- <button type="submit" class="btn btn-danger">Eliminar</button>-->
                         
